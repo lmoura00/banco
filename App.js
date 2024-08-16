@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import {ActivityIndicator} from "react-native"
+import { Routes } from "./src/Routes/Index";
+import { AuthProvider } from "./src/Hook/Auth";
+//import {app} from './firebaseConfig'
+import Constants from "expo-constants"
+const statusBarHeight = Constants.statusBarHeight;
+import {useFonts, DancingScript_400Regular, DancingScript_500Medium, DancingScript_600SemiBold, DancingScript_700Bold} from '@expo-google-fonts/dancing-script'
+export default function App(){
+  let [fontsLoaded] = useFonts({
+    DancingScript_400Regular, DancingScript_500Medium, DancingScript_600SemiBold, DancingScript_700Bold
+  })
+  if(!fontsLoaded){
+    return(
+      <ActivityIndicator size={"large"}/>
+    )
+  }else{
+      return(
+      <AuthProvider>
+        <Routes/>
+      </AuthProvider>
+    )
+  }
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
