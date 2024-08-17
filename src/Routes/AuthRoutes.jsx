@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {View, Text, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -10,10 +10,11 @@ import { Perfil } from "../Pages/Auth/Perfil";
 import { Extrato } from "../Pages/Auth/Extrato";
 import { Investimentos } from "../Pages/Auth/Investimentos";
 import { Shopping } from "../Pages/Auth/Shopping";
-
+import { api } from "../../Api";
 
 
 function BottomBarNavigation(){
+
     const {user, setUser} = useAuth()
     
     const navigation = useNavigation()
@@ -149,6 +150,15 @@ function BottomBarNavigation(){
 
 
 export function AuthRoutes(){
+  const [data, setData] = useState("")
+  async function getData(){
+    const response = await api.get("?results=1&nat=BR")
+    setData(response.data.results)
+    console.log(data)
+  }
+  useEffect(()=>{
+    getData
+  },[])
     const {user, setUser} = useAuth()
     const Navigation = useNavigation()
     const {Navigator, Screen} = createNativeStackNavigator()
